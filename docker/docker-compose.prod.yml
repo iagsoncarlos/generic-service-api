@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+    backend:
+        build:
+            context: ..
+            dockerfile: docker/Dockerfile
+        container_name: backend
+        restart: always
+        env_file:
+            - .env.production
+        ports:
+            - "${SPRING_PORT:-8080}:8080"
+        depends_on:
+            - postgres
+        networks:
+            - generic-network
+
+    postgres:
+        image: postgres:alpine
+        container_name: postgres
+        restart: always
+        env_file:
+            - .env.production
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER:-postgres}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+            POSTGRES_DB: ${POSTGRES_DB:-postgres}
+        ports:
+            - "${POSTGRES_PORT:-5432}:5432"
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        networks:
+            - generic-network
+
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin
+        restart: always
+        env_file:
+            - .env.production
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-postgres@email.com}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-postgres}
+        ports:
+            - "${PGADMIN_PORT:-15432}:80"
+        depends_on:
+            - postgres
+        networks:
+            - generic-network
+
+networks:
+    generic-network:
+        driver: bridge
+
+volumes:
+    postgres-data:

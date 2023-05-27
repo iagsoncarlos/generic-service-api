@@ -1,0 +1,51 @@
+spring:
+  flyway:
+    enabled: true
+
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DATASOURCE_HIBERNATE_DDL_AUTO:update}
+    database-platform: ${DATASOURCE_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}
+    open-in-view: ${DATASOURCE_JPA_OPEN_IN_VIEW:false}
+    generate-ddl: ${DATASOURCE_GENERATE_DDL:true}
+    show-sql: ${DATASOURCE_SHOW_SQL:true}
+
+server:
+  servlet:
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH:/generic-service/api}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - openapi
+          - swagger-ui
+
+logging:
+  level:
+    ma:
+      glasnost:
+        orika: INFO
+    root: ${ROOT_LOG_LEVEL:INFO}
+    org:
+      zalando:
+        logbook: ${LOGBOOK_LOG_LEVEL:TRACE}
+
+springdoc:
+  use-management-port: ${SPRINGDOC_USE_MANAGEMENT_PORT:false}
+  show-actuator: ${SPRINGDOC_SHOW_ACTUATOR:false}
+  api-docs:
+    path: ${SPRINGDOC_API_DOCS_PATH:/api-docs}
+  swagger-ui:
+    path: ${SPRINGDOC_SWAGGER_UI_PATH:/swagger-ui.html}
