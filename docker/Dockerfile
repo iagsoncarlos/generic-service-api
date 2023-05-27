@@ -24,4 +24,4 @@ COPY --from=builder /app/target/*.jar /app/generic-service-api.jar
 EXPOSE 8080
 
 # Set the entry point for the container
-ENTRYPOINT ["java", "--add-opens", "java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.util=ALL-UNNAMED", "-jar", "/app/generic-service-api.jar"]
+ENTRYPOINT ["java", "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.util=ALL-UNNAMED", "-jar", "/app/generic-service-api.jar"]
