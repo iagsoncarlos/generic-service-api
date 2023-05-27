@@ -100,9 +100,7 @@ The `docker-compose.dev.yml` file is used for simplified development. It defines
 To start the development environment, run the following command:
 
 ```bash
-docker-compose -f docker-compose.dev
-
-.yml up -d
+docker-compose -f docker-compose.dev.yml up -d
 ```
 
 ### Production Environment
@@ -126,7 +124,7 @@ To get started with the Generic Service, follow these steps:
 1. Clone the repository or download the source code.
 
 ```bash
-https://github.com/iagsoncarlos/generic-service-api.git
+git clone https://github.com/iagsoncarlos/generic-service-api.git
 ```
 ```bash
 cd /generic-service-api
